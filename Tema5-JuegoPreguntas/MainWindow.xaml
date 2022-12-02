@@ -1,0 +1,161 @@
+﻿<Window x:Class="Tema5_JuegoPreguntas.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tema5_JuegoPreguntas"
+        mc:Ignorable="d"
+        Height="450" Width="800"
+        Icon="assets/icon.ico" Title="Juego de preguntas">
+    <Window.Resources>
+        <!-- Control templates-->
+        <ControlTemplate x:Key="ButtonControlTemplate" TargetType="{x:Type Button}">
+            <Border Margin="10 0" x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter Margin="2" x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="Foreground" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!-- Styles-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}"></Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <TabControl>
+            <TabItem Header="Jugar">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right">
+                        <GroupBox>
+                            <WrapPanel>
+
+                            </WrapPanel>
+                        </GroupBox>
+                        <TextBlock>Dificultad</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <Slider></Slider>
+                            <Button>Nueva Partida</Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Bottom">
+                        <TextBlock>Respuesta</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox></TextBox>
+                            <Button>Validar</Button>
+                        </StackPanel>
+                        <Expander Header="Ver pista / Ocultar pista">
+                            <TextBlock></TextBlock>
+                        </Expander>
+                    </StackPanel>
+                    <StackPanel>
+                        <Image></Image>
+                        <TextBlock></TextBlock>
+                        <Image></Image>
+                        <TextBlock></TextBlock>
+                    </StackPanel>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Añadir pregunta">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
+
+                    <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
+                        <Button DockPanel.Dock="Top">Añadir pregunta</Button>
+                        <Button DockPanel.Dock="Top">Limpiar formulario</Button>
+                        <Button DockPanel.Dock="Bottom">Examinar</Button>
+                    </DockPanel>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                    <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                    <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
+                    <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+                    <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
+                    <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Gestionar preguntas" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
+
+                    <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
+                        <Button x:Name="cargarDeJSON" Click="cargarDeJSON_Click" DockPanel.Dock="Top">Cargar de JSON</Button>
+                        <Button DockPanel.Dock="Top">Guardar en JSON</Button>
+                        <Button DockPanel.Dock="Top">Elimina pregunta</Button>
+                        <Button DockPanel.Dock="Bottom">Examinar</Button>
+                    </DockPanel>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                    <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                    <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
+                    <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+                    <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
+                    <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </StackPanel>
+</Window>
