@@ -42,120 +42,117 @@
             <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}"></Setter>
         </Style>
     </Window.Resources>
-    <StackPanel>
-        <TabControl>
-            <TabItem Header="Jugar">
-                <DockPanel>
-                    <StackPanel DockPanel.Dock="Right">
-                        <GroupBox>
-                            <WrapPanel>
+    <TabControl>
+        <TabItem Header="Jugar">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Right">
+                    <GroupBox>
+                        <WrapPanel>
 
-                            </WrapPanel>
-                        </GroupBox>
-                        <TextBlock>Dificultad</TextBlock>
-                        <StackPanel Orientation="Horizontal">
-                            <Slider></Slider>
-                            <Button>Nueva Partida</Button>
-                        </StackPanel>
+                        </WrapPanel>
+                    </GroupBox>
+                    <TextBlock>Dificultad</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Slider></Slider>
+                        <Button>Nueva Partida</Button>
                     </StackPanel>
-                    <StackPanel DockPanel.Dock="Bottom">
-                        <TextBlock>Respuesta</TextBlock>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox></TextBox>
-                            <Button>Validar</Button>
-                        </StackPanel>
-                        <Expander Header="Ver pista / Ocultar pista">
-                            <TextBlock></TextBlock>
-                        </Expander>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom">
+                    <TextBlock>Respuesta</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox></TextBox>
+                        <Button>Validar</Button>
                     </StackPanel>
-                    <StackPanel>
-                        <Image></Image>
+                    <Expander Header="Ver pista / Ocultar pista">
                         <TextBlock></TextBlock>
-                        <Image></Image>
-                        <TextBlock></TextBlock>
-                    </StackPanel>
+                    </Expander>
+                </StackPanel>
+                <StackPanel>
+                    <Image></Image>
+                    <TextBlock></TextBlock>
+                    <Image></Image>
+                    <TextBlock></TextBlock>
+                </StackPanel>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Añadir pregunta">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
+
+                <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
+                    <Button DockPanel.Dock="Top">Añadir pregunta</Button>
+                    <Button DockPanel.Dock="Top">Limpiar formulario</Button>
+                    <Button DockPanel.Dock="Bottom">Examinar</Button>
                 </DockPanel>
-            </TabItem>
-            <TabItem Header="Añadir pregunta">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
 
-                    <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
+                <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
 
-                    <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
-                        <Button DockPanel.Dock="Top">Añadir pregunta</Button>
-                        <Button DockPanel.Dock="Top">Limpiar formulario</Button>
-                        <Button DockPanel.Dock="Bottom">Examinar</Button>
-                    </DockPanel>
+                <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
+                <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+                <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
+                <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Gestionar preguntas" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
-                    <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
-                    <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
 
-                    <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
-                    <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
-                    <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
-                    <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Gestionar preguntas" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
+                    <Button x:Name="cargarDeJSON" Click="cargarDeJSON_Click" DockPanel.Dock="Top">Cargar de JSON</Button>
+                    <Button DockPanel.Dock="Top">Guardar en JSON</Button>
+                    <Button DockPanel.Dock="Top">Elimina pregunta</Button>
+                    <Button DockPanel.Dock="Bottom">Examinar</Button>
+                </DockPanel>
 
-                    <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
+                <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
+                <TextBox x:Name="preguntaGestionarPreguntasTextBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
 
-                    <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
-                        <Button x:Name="cargarDeJSON" Click="cargarDeJSON_Click" DockPanel.Dock="Top">Cargar de JSON</Button>
-                        <Button DockPanel.Dock="Top">Guardar en JSON</Button>
-                        <Button DockPanel.Dock="Top">Elimina pregunta</Button>
-                        <Button DockPanel.Dock="Bottom">Examinar</Button>
-                    </DockPanel>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
-                    <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
-                    <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
-
-                    <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
-                    <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
-                    <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
-                    <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
-                </Grid>
-            </TabItem>
-        </TabControl>
-
-    </StackPanel>
+                <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
+                <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+                <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
+                <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

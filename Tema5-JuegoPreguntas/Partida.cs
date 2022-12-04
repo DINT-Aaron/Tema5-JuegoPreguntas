@@ -12,8 +12,6 @@ namespace Tema5_JuegoPreguntas
     {
         private ObservableCollection<Pregunta> listaPreguntas;
         private bool empezada;
-        private bool preguntasValidas;
-
         public ObservableCollection<Pregunta> ListaPreguntas
         {
             get { return listaPreguntas; }
@@ -24,10 +22,13 @@ namespace Tema5_JuegoPreguntas
             get { return empezada; }
             set { SetProperty(ref empezada, value); }
         }
-        public bool PreguntasValidas
+        public Partida()
         {
-            get { return preguntasValidas; }
-            set { SetProperty(ref preguntasValidas, value); }
+
+        }
+        public void añadePregunta(Pregunta pregunta)
+        {
+            listaPreguntas.Add(pregunta);
         }
     }
 }
