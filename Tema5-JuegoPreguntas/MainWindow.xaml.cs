@@ -31,9 +31,23 @@ namespace Tema5_JuegoPreguntas
             this.DataContext = vm;
         }
 
-        private void cargarDeJSON_Click(object sender, RoutedEventArgs e)
+        private void cargarDeJSONButton_Click(object sender, RoutedEventArgs e)
         {
             vm.cargarJSON();
+        }
+
+        private void añadirPreguntaButton_Click(object sender, RoutedEventArgs e)
+        {
+            vm.añadirPregunta(preguntaAñadirPreguntaTextBox.Text,respuestaAñadirPreguntaTextBox.Text,imagenAñadirPreguntaTextBox.Text,dificultadAñadirPreguntaComboBox.SelectedItem.ToString(),categoriaAñadirPreguntaComboBox.SelectedItem.ToString());
+        }
+
+        private void limpiarFormularioButton_Click(object sender, RoutedEventArgs e)
+        {
+            preguntaAñadirPreguntaTextBox.Text = null;
+            respuestaAñadirPreguntaTextBox.Text = null;
+            imagenAñadirPreguntaTextBox.Text = null;
+            dificultadAñadirPreguntaComboBox.SelectedItem = null;
+            categoriaAñadirPreguntaComboBox.SelectedItem = null;
         }
     }
 }

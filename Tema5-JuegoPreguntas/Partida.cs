@@ -11,12 +11,12 @@ namespace Tema5_JuegoPreguntas
     class Partida : ObservableObject
     {
         private ObservableCollection<Pregunta> listaPreguntas;
-        private bool empezada;
         public ObservableCollection<Pregunta> ListaPreguntas
         {
             get { return listaPreguntas; }
             set { SetProperty(ref listaPreguntas, value); }
         }
+        private bool empezada;
         public bool Empezada
         {
             get { return empezada; }
@@ -24,11 +24,11 @@ namespace Tema5_JuegoPreguntas
         }
         public Partida()
         {
-
+            listaPreguntas = new ObservableCollection<Pregunta>();
         }
         public void añadePregunta(Pregunta pregunta)
         {
-            listaPreguntas.Add(pregunta);
+            ListaPreguntas.Add(pregunta);
         }
     }
 }

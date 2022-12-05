@@ -85,8 +85,8 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -96,22 +96,22 @@
                 <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
 
                 <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
-                    <Button DockPanel.Dock="Top">Añadir pregunta</Button>
-                    <Button DockPanel.Dock="Top">Limpiar formulario</Button>
+                    <Button x:Name="añadirPreguntaButton" Click="añadirPreguntaButton_Click" DockPanel.Dock="Top">Añadir pregunta</Button>
+                    <Button x:Name="limpiarFormularioButton" Click="limpiarFormularioButton_Click" DockPanel.Dock="Top">Limpiar formulario</Button>
                     <Button DockPanel.Dock="Bottom">Examinar</Button>
                 </DockPanel>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
-                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBox x:Name="preguntaAñadirPreguntaTextBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
                 <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
-                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBox x:Name="respuestaAñadirPreguntaTextBox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBox x:Name="imagenAñadirPreguntaTextBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
 
                 <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
-                <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+                <ComboBox x:Name="dificultadAñadirPreguntaComboBox" ItemsSource="{Binding Path=ListaDificultades}" Grid.Row="5" Grid.Column="1"></ComboBox>
                 <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
-                <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
+                <ComboBox x:Name="categoriaAñadirPreguntaComboBox" ItemsSource="{Binding Path=ListaCategorias}" Grid.Row="6" Grid.Column="3"></ComboBox>
             </Grid>
         </TabItem>
         <TabItem Header="Gestionar preguntas" >
@@ -124,34 +124,36 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="250" Source="assets/question.png"></Image>
+                <ListBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ItemsSource="{Binding Path=Partida.ListaPreguntas}" DisplayMemberPath="EnunciadoPregunta" SelectedItem="{Binding Path=PreguntaSeleccionada}">
+                    
+                </ListBox>
 
                 <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
-                    <Button x:Name="cargarDeJSON" Click="cargarDeJSON_Click" DockPanel.Dock="Top">Cargar de JSON</Button>
+                    <Button x:Name="cargarDeJSONButton" Click="cargarDeJSONButton_Click" DockPanel.Dock="Top">Cargar de JSON</Button>
                     <Button DockPanel.Dock="Top">Guardar en JSON</Button>
                     <Button DockPanel.Dock="Top">Elimina pregunta</Button>
                     <Button DockPanel.Dock="Bottom">Examinar</Button>
                 </DockPanel>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
-                <TextBox x:Name="preguntaGestionarPreguntasTextBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBox x:Name="preguntaGestionarPreguntasTextBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=PreguntaSeleccionada.EnunciadoPregunta}"></TextBox>
                 <TextBlock Grid.Row="3" Grid.Column="0">Respuesta</TextBlock>
-                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=PreguntaSeleccionada.Respuesta}"></TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="0">Imagen</TextBlock>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=PreguntaSeleccionada.Imagen}"></TextBox>
 
                 <TextBlock Grid.Row="5" Grid.Column="0">Nivel de dificultad</TextBlock>
-                <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+                <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Path=ListaDificultades}" SelectedValue="{Binding Path=PreguntaSeleccionada.NivelDeDificultad}"></ComboBox>
                 <TextBlock Grid.Row="5" Grid.Column="2">Categoría</TextBlock>
-                <ComboBox Grid.Row="6" Grid.Column="3"></ComboBox>
+                <ComboBox Grid.Row="6" Grid.Column="3" ItemsSource="{Binding Path=ListaCategorias}" SelectedItem="{Binding Path=PreguntaSeleccionada.CategoriaPregunta}"></ComboBox>
             </Grid>
         </TabItem>
     </TabControl>

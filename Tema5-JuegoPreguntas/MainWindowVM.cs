@@ -14,21 +14,71 @@ namespace Tema5_JuegoPreguntas
     class MainWindowVM:ObservableObject
     {
         private Partida partida;
-
-        private ObservableCollection<string> categorias;
-        
-        public ObservableCollection<string> Categorias
+        public Partida Partida
         {
-            get { return categorias; }
-            set { SetProperty(ref categorias, value); }
+            get { return partida; }
+            set { SetProperty(ref partida, value); }
+        }
+
+        private ObservableCollection<string> listaCategorias;
+        public ObservableCollection<string> ListaCategorias
+        {
+            get { return listaCategorias; }
+            set { SetProperty(ref listaCategorias, value); }
+        }
+        private ObservableCollection<string> listaDificultades;
+        public ObservableCollection<string> ListaDificultades
+        {
+            get { return listaDificultades; }
+            set { SetProperty(ref listaDificultades, value); }
+        }
+        private Pregunta preguntaSeleccionada;
+        public Pregunta PreguntaSeleccionada
+        {
+            get { return preguntaSeleccionada; }
+            set { SetProperty(ref preguntaSeleccionada, value); }
         }
         public MainWindowVM()
         {
-            partida = new Partida();
+            Partida = new Partida();
+            ListaCategorias = new ObservableCollection<string>();
+            ListaDificultades = new ObservableCollection<string>();
+
+            añadirDificultades();
+            añadirCategorias();
+
+            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 1", "1", "1", "Fácil", "Ciencia"));
+            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 2", "2", "2", "Fácil", "Geografía"));
+            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 3", "3", "3", "Difícil", "Historia"));
+            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 4", "4", "4", "Difícil", "Arte y literatura"));
+            
         }
+        private void añadirCategorias()
+        {
+            ListaCategorias.Add("Geografía");
+            ListaCategorias.Add("Arte y literatura");
+            ListaCategorias.Add("Historia");
+            ListaCategorias.Add("Ciencia");
+        }
+
+        private void añadirDificultades()
+        {
+            ListaDificultades.Add("Fácil");
+            ListaDificultades.Add("Difícil");
+        }
+
         public bool comprobarCategoriasContienenPregunta()
         {
-            return partida.ListaPreguntas.Any(p => p.Equals("asdf"));
+            bool categoriaContienePregunta = true;
+
+            foreach(string c in ListaCategorias)
+            {
+                if(!partida.ListaPreguntas.Any(p => p.Equals(c))){
+                    categoriaContienePregunta = false;
+                }
+            }
+
+            return categoriaContienePregunta;
         }
         public void cargarJSON (){
             ObservableCollection<Pregunta> lista=new ObservableCollection<Pregunta>();
@@ -40,7 +90,7 @@ namespace Tema5_JuegoPreguntas
                 lista = JsonConvert.DeserializeObject<ObservableCollection<Pregunta>>(preguntasJson);
             }
 
-            partida.ListaPreguntas = lista;
+            Partida.ListaPreguntas = lista;
         }
         public void guardarJSON()
         {
@@ -51,9 +101,9 @@ namespace Tema5_JuegoPreguntas
             string personasJson = JsonConvert.SerializeObject(lista);
             File.WriteAllText("personas.json", personasJson);
         }
-        public void añadirPregunta()
+        public void añadirPregunta(string enunciado, string respuesta, string imagen, string nivelDificultad, string categoria)
         {
-            
+            Partida.ListaPreguntas.Add(new Pregunta(enunciado, respuesta, imagen, nivelDificultad, categoria));
         }
     }
 }
