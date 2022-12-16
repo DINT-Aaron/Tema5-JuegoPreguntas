@@ -15,6 +15,7 @@ namespace Tema5_JuegoPreguntas
         private string imagen;
         private string nivelDeDificultad;
         private string categoriaPregunta;
+        private string pista;
 
         public Pregunta()
         {
@@ -27,6 +28,18 @@ namespace Tema5_JuegoPreguntas
             this.imagen = imagen;
             this.nivelDeDificultad = nivelDeDificultad;
             this.categoriaPregunta = categoriaPregunta;
+            pista = generarPista(respuesta);
+        }
+
+        private string generarPista(string respuesta)
+        {
+            string pista = respuesta.Replace('a', '*');
+            pista = pista.Replace('e', '*');
+            pista = pista.Replace('i', '*');
+            pista = pista.Replace('o', '*');
+            pista = pista.Replace('u', '*');
+            
+            return pista;
         }
 
         public string EnunciadoPregunta
@@ -54,6 +67,10 @@ namespace Tema5_JuegoPreguntas
             get { return categoriaPregunta; }
             set { SetProperty(ref categoriaPregunta, value); }
         }
-
+        public string Pista
+        {
+            get { return pista; }
+            set { SetProperty(ref pista, value); }
+        }
     }
 }

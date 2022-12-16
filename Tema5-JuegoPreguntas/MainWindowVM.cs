@@ -11,47 +11,66 @@ using System.Threading.Tasks;
 
 namespace Tema5_JuegoPreguntas
 {
-    class MainWindowVM:ObservableObject
+    class MainWindowVM : ObservableObject
     {
         private Partida partida;
+        private ObservableCollection<string> listaCategorias;
+        private ObservableCollection<string> listaDificultades;
+        private Pregunta preguntaSeleccionada;
+        private JsonService serviceJSON;
+        private DialogosService dialogService;
+        private Pregunta preguntaActual;
+        private AzureBlobStorageService azureService;
         public Partida Partida
         {
             get { return partida; }
             set { SetProperty(ref partida, value); }
         }
-
-        private ObservableCollection<string> listaCategorias;
         public ObservableCollection<string> ListaCategorias
         {
             get { return listaCategorias; }
             set { SetProperty(ref listaCategorias, value); }
         }
-        private ObservableCollection<string> listaDificultades;
         public ObservableCollection<string> ListaDificultades
         {
             get { return listaDificultades; }
             set { SetProperty(ref listaDificultades, value); }
         }
-        private Pregunta preguntaSeleccionada;
         public Pregunta PreguntaSeleccionada
         {
             get { return preguntaSeleccionada; }
             set { SetProperty(ref preguntaSeleccionada, value); }
         }
+        public JsonService ServiceJSON
+        {
+            get { return serviceJSON; }
+            set { SetProperty(ref serviceJSON, value); }
+        }
+        public DialogosService DialogService
+        {
+            get { return dialogService; }
+            set { SetProperty(ref dialogService, value); }
+        }
+        public Pregunta PreguntaActual
+        {
+            get { return preguntaActual; }
+            set { SetProperty(ref preguntaActual, value); }
+        }
+        public AzureBlobStorageService AzureService
+        {
+            get { return azureService; }
+            set { SetProperty(ref azureService, value); }
+        }
         public MainWindowVM()
         {
             Partida = new Partida();
+            ServiceJSON = new JsonService();
+            DialogService = new DialogosService();
             ListaCategorias = new ObservableCollection<string>();
             ListaDificultades = new ObservableCollection<string>();
-
+            
             añadirDificultades();
             añadirCategorias();
-
-            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 1", "1", "1", "Fácil", "Ciencia"));
-            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 2", "2", "2", "Fácil", "Geografía"));
-            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 3", "3", "3", "Difícil", "Historia"));
-            Partida.ListaPreguntas.Add(new Pregunta("Pregunta 4", "4", "4", "Difícil", "Arte y literatura"));
-            
         }
         private void añadirCategorias()
         {
@@ -71,39 +90,86 @@ namespace Tema5_JuegoPreguntas
         {
             bool categoriaContienePregunta = true;
 
-            foreach(string c in ListaCategorias)
+            foreach (string c in ListaCategorias)
             {
-                if(!partida.ListaPreguntas.Any(p => p.Equals(c))){
+                if (!partida.ListaPreguntas.Any(p => p.Equals(c)))
+                {
                     categoriaContienePregunta = false;
                 }
             }
 
             return categoriaContienePregunta;
         }
-        public void cargarJSON (){
-            ObservableCollection<Pregunta> lista=new ObservableCollection<Pregunta>();
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string preguntasJson = File.ReadAllText(openFileDialog.FileName);
-                lista = JsonConvert.DeserializeObject<ObservableCollection<Pregunta>>(preguntasJson);
-            }
-
-            Partida.ListaPreguntas = lista;
+        public void cargarJSON()
+        {
+            Partida.ListaPreguntas = ServiceJSON.cargarJSON(DialogService.abrirFichero());
         }
         public void guardarJSON()
         {
-            ObservableCollection<Pregunta> lista;
-            lista = new ObservableCollection<Pregunta>();
-
-            //Exportar a un fichero JSON
-            string personasJson = JsonConvert.SerializeObject(lista);
-            File.WriteAllText("personas.json", personasJson);
+            ServiceJSON.guardarJSON(partida, DialogService.guardarFichero());
         }
         public void añadirPregunta(string enunciado, string respuesta, string imagen, string nivelDificultad, string categoria)
         {
+            if (string.IsNullOrEmpty(imagen))
+            {
+                imagen = "assets/question.png";
+            }
+            else
+            {
+                imagen = azureService.subirImagen(imagen);
+            }
             Partida.ListaPreguntas.Add(new Pregunta(enunciado, respuesta, imagen, nivelDificultad, categoria));
+        }
+        public void eliminarPregunta()
+        {
+            Partida.ListaPreguntas.Remove(PreguntaSeleccionada);
+        }
+        public void validarRespuesta(string respuestaUsuario)
+        {
+            int i = 1;
+            if (respuestaUsuario.Equals(PreguntaActual.Respuesta))
+            {
+                if (i > Partida.ListaPreguntas.Count)
+                {
+                    PreguntaActual = Partida.ListaPreguntas[i];
+                    i++;
+                }
+                else
+                {
+                    DialogService.mostrarMensaje("Has acertado todas las categorías", "Enhorabuena!");
+                    Partida.Empezada = false;
+                }
+            }
+            else
+            {
+                DialogService.mostrarMensaje("Respuesta incorrecta", "Respuesta incorrecta");
+            }
+        }
+        public void nuevaPartida(double dificultad)
+        {
+            string dificultadElegida = dificultad == 0 ? "Fácil" : "Difícil";
+            foreach (string c in ListaCategorias)
+            {
+                List<Pregunta> preguntasDificultadElegida = Partida.ListaPreguntas.Where(p => p.CategoriaPregunta == c && p.NivelDeDificultad == dificultadElegida).ToList();
+                if (preguntasDificultadElegida.Count > 0)
+                {
+                    Random rnd = new Random();
+                    Partida.ListaPreguntas.Add(preguntasDificultadElegida[rnd.Next(0, preguntasDificultadElegida.Count)]);
+                }
+            }
+            if (Partida.ListaPreguntas.Count < 4)
+            {
+                DialogService.mostrarError("Es necesaria al menos una pregunta por cada categoría para empezar una partida");
+            }
+            else
+            {
+                Partida.Empezada = true;
+                PreguntaActual = Partida.ListaPreguntas[0];
+            }
+        }
+        public string subirImagen()
+        {
+           return AzureService.subirImagen(DialogService.abrirFichero());
         }
     }
 }

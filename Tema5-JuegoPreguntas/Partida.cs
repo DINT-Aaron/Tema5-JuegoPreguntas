@@ -25,10 +25,7 @@ namespace Tema5_JuegoPreguntas
         public Partida()
         {
             listaPreguntas = new ObservableCollection<Pregunta>();
-        }
-        public void añadePregunta(Pregunta pregunta)
-        {
-            ListaPreguntas.Add(pregunta);
+            empezada = false;
         }
     }
 }

@@ -35,12 +35,19 @@ namespace Tema5_JuegoPreguntas
         {
             vm.cargarJSON();
         }
-
+        private void guardarEnJSONButton_Click(object sender, RoutedEventArgs e)
+        {
+            vm.guardarJSON();
+        }
+        private void eliminarPreguntaButton_Click(object sender, RoutedEventArgs e)
+        {
+            vm.eliminarPregunta();
+        }
         private void añadirPreguntaButton_Click(object sender, RoutedEventArgs e)
         {
-            vm.añadirPregunta(preguntaAñadirPreguntaTextBox.Text,respuestaAñadirPreguntaTextBox.Text,imagenAñadirPreguntaTextBox.Text,dificultadAñadirPreguntaComboBox.SelectedItem.ToString(),categoriaAñadirPreguntaComboBox.SelectedItem.ToString());
+            vm.añadirPregunta(preguntaAñadirPreguntaTextBox.Text, respuestaAñadirPreguntaTextBox.Text, imagenAñadirPreguntaTextBox.Text, dificultadAñadirPreguntaComboBox.SelectedItem.ToString(), categoriaAñadirPreguntaComboBox.SelectedItem.ToString());
+            vm.DialogService.mostrarMensaje("La pregunta se ha añadido correctamente","Pregunta añadida");
         }
-
         private void limpiarFormularioButton_Click(object sender, RoutedEventArgs e)
         {
             preguntaAñadirPreguntaTextBox.Text = null;
@@ -48,6 +55,22 @@ namespace Tema5_JuegoPreguntas
             imagenAñadirPreguntaTextBox.Text = null;
             dificultadAñadirPreguntaComboBox.SelectedItem = null;
             categoriaAñadirPreguntaComboBox.SelectedItem = null;
+        }
+
+        private void validarRespuestaJuegoButton_Click(object sender, RoutedEventArgs e)
+        {
+            vm.validarRespuesta(respuestaJuegoTextBox.Text);
+        }
+
+        private void nuevaPartidaJuegoButton_Click(object sender, RoutedEventArgs e)
+        {
+            double dificultad = nivelDificultadPartidaSlider.Value;
+            vm.nuevaPartida(dificultad);
+        }
+
+        private void examinarButton_Click(object sender, RoutedEventArgs e)
+        {
+            vm.subirImagen();
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tema5_JuegoPreguntas"
         mc:Ignorable="d"
-        Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
         Icon="assets/icon.ico" Title="Juego de preguntas">
     <Window.Resources>
         <!-- Control templates-->
@@ -41,39 +41,77 @@
         <Style TargetType="{x:Type Button}">
             <Setter Property="Template" Value="{StaticResource ButtonControlTemplate}"></Setter>
         </Style>
+        <Style TargetType="{x:Type Image}" x:Key="Icono">
+            <Setter Property="Width" Value="50"></Setter>
+        </Style>
     </Window.Resources>
+    
     <TabControl>
         <TabItem Header="Jugar">
-            <DockPanel>
-                <StackPanel DockPanel.Dock="Right">
-                    <GroupBox>
-                        <WrapPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
 
-                        </WrapPanel>
-                    </GroupBox>
-                    <TextBlock>Dificultad</TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <Slider></Slider>
-                        <Button>Nueva Partida</Button>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="{Binding Categoria}" Style="{StaticResource Icono}" HorizontalAlignment="Left"></Image>
+                <Image Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Source="{Binding Path=PreguntaActual.Imagen}"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Path=PreguntaActual.EnunciadoPregunta}" />
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Respuesta"/>
+                <StackPanel Grid.Column="0" Grid.Row="5" Orientation="Horizontal">
+                    <TextBox x:Name="respuestaJuegoTextBox" MinWidth="450"/>
+                    <Button x:Name="validarRespuestaJuegoButton" Click="validarRespuestaJuegoButton_Click">Validar</Button>
+                </StackPanel>
+                <Expander Grid.Column="0" Grid.Row="6" Header="Ver pista / Ocultar pista">
+                    <TextBlock Text="{Binding Path=PreguntaActual.Pista}"></TextBlock>
+                </Expander>
+                <GroupBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Header="Categorías conseguidas">
+                    <UniformGrid>
+                        <Border>
+                            <StackPanel>
+                                <Image Source="assets/geografia.png" Style="{StaticResource Icono}"/>
+                                <TextBlock HorizontalAlignment="Center">Geografía</TextBlock>
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <StackPanel>
+                                <Image Source="assets/arte.png" Style="{StaticResource Icono}"/>
+                                <TextBlock HorizontalAlignment="Center">Arte y literatura</TextBlock>
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <StackPanel>
+                                <Image Source="assets/ciencia.png" Style="{StaticResource Icono}"/>
+                                <TextBlock HorizontalAlignment="Center">Ciencia</TextBlock>
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <StackPanel>
+                                <Image Source="assets/historia.png" Style="{StaticResource Icono}"/>
+                                <TextBlock HorizontalAlignment="Center">Historia</TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </GroupBox>
+                <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock>Dificultad</TextBlock>
+                        <Slider x:Name="nivelDificultadPartidaSlider" Minimum="0" Maximum="1" TickFrequency="1" TickPlacement="BottomRight"></Slider>
+                        <TextBlock>Fácil Difícil</TextBlock>
                     </StackPanel>
+                    <Button x:Name="nuevaPartidaJuegoButton" Click="nuevaPartidaJuegoButton_Click">Nueva Partida</Button>
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Bottom">
-                    <TextBlock>Respuesta</TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox></TextBox>
-                        <Button>Validar</Button>
-                    </StackPanel>
-                    <Expander Header="Ver pista / Ocultar pista">
-                        <TextBlock></TextBlock>
-                    </Expander>
-                </StackPanel>
-                <StackPanel>
-                    <Image></Image>
-                    <TextBlock></TextBlock>
-                    <Image></Image>
-                    <TextBlock></TextBlock>
-                </StackPanel>
-            </DockPanel>
+            </Grid>
         </TabItem>
         <TabItem Header="Añadir pregunta">
             <Grid>
@@ -98,7 +136,7 @@
                 <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
                     <Button x:Name="añadirPreguntaButton" Click="añadirPreguntaButton_Click" DockPanel.Dock="Top">Añadir pregunta</Button>
                     <Button x:Name="limpiarFormularioButton" Click="limpiarFormularioButton_Click" DockPanel.Dock="Top">Limpiar formulario</Button>
-                    <Button DockPanel.Dock="Bottom">Examinar</Button>
+                    <Button DockPanel.Dock="Bottom" x:Name="examinarAñadirPreguntaButton" Click="examinarButton_Click">Examinar</Button>
                 </DockPanel>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
@@ -114,7 +152,7 @@
                 <ComboBox x:Name="categoriaAñadirPreguntaComboBox" ItemsSource="{Binding Path=ListaCategorias}" Grid.Row="6" Grid.Column="3"></ComboBox>
             </Grid>
         </TabItem>
-        <TabItem Header="Gestionar preguntas" >
+        <TabItem Header="Gestionar preguntas">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -133,14 +171,14 @@
                 </Grid.RowDefinitions>
 
                 <ListBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ItemsSource="{Binding Path=Partida.ListaPreguntas}" DisplayMemberPath="EnunciadoPregunta" SelectedItem="{Binding Path=PreguntaSeleccionada}">
-                    
+
                 </ListBox>
 
                 <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" LastChildFill="False">
                     <Button x:Name="cargarDeJSONButton" Click="cargarDeJSONButton_Click" DockPanel.Dock="Top">Cargar de JSON</Button>
-                    <Button DockPanel.Dock="Top">Guardar en JSON</Button>
-                    <Button DockPanel.Dock="Top">Elimina pregunta</Button>
-                    <Button DockPanel.Dock="Bottom">Examinar</Button>
+                    <Button x:Name="guardarEnJSONButton" Click="guardarEnJSONButton_Click" DockPanel.Dock="Top">Guardar en JSON</Button>
+                    <Button x:Name="eliminarPreguntaButton" Click="eliminarPreguntaButton_Click" DockPanel.Dock="Top">Elimina pregunta</Button>
+                    <Button x:Name="examinarGestionarPreguntasButton" Click="examinarButton_Click" DockPanel.Dock="Bottom">Examinar</Button>
                 </DockPanel>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Pregunta</TextBlock>
